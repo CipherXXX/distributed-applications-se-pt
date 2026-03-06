@@ -1,0 +1,16 @@
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="hero-forge">
+    <h1>SkillForge</h1>
+    <p class="lead">Shape your path. Master your craft. Learning & Course Management Platform.</p>
+    <p class="text-forge-muted mb-4" style="color: var(--forge-text-muted);">Manage students, courses, and enrollments. Use the menu to navigate.</p>
+    @if (Context.Session.GetString("SkillForgeToken") == null)
+    {
+        <p class="stagger-in">
+            <a asp-controller="Auth" asp-action="Login" class="btn btn-forge btn-forge-primary me-2">Login</a>
+            <a asp-controller="Auth" asp-action="Register" class="btn btn-forge btn-forge-outline">Register</a>
+        </p>
+    }
+</div>

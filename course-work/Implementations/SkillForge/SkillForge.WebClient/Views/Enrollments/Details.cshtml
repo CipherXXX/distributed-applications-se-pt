@@ -1,0 +1,28 @@
+@model EnrollmentDto
+@{
+    ViewData["Title"] = "Enrollment Details";
+    var isAdmin = Context.IsAdmin();
+}
+
+<h2 class="page-title">Enrollment Details</h2>
+<div class="card-forge p-4">
+    <dl class="row dl-forge mb-0">
+        @if (isAdmin)
+        {
+            <dt class="col-sm-3">Id</dt><dd class="col-sm-9">@Model.Id</dd>
+        }
+        <dt class="col-sm-3">Student</dt><dd class="col-sm-9">@(isAdmin ? (Model.StudentName ?? $"#{Model.StudentId}") : (Model.StudentName ?? "—"))</dd>
+        <dt class="col-sm-3">Course</dt><dd class="col-sm-9">@(isAdmin ? (Model.CourseTitle ?? $"#{Model.CourseId}") : (Model.CourseTitle ?? "—"))</dd>
+        <dt class="col-sm-3">Enrollment Date</dt><dd class="col-sm-9">@Model.EnrollmentDate.ToString("d")</dd>
+        <dt class="col-sm-3">Progress</dt><dd class="col-sm-9">@Model.ProgressPercentage%</dd>
+        <dt class="col-sm-3">Completed</dt><dd class="col-sm-9">@(Model.Completed ? "Yes" : "No")</dd>
+    </dl>
+</div>
+<div class="mt-3 d-flex gap-2 flex-wrap">
+    <a asp-action="Index" class="btn btn-forge btn-forge-outline">Back to List</a>
+    @if (isAdmin)
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-forge btn-forge-primary">Edit</a>
+        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-forge btn-forge-secondary">Delete</a>
+    }
+</div>

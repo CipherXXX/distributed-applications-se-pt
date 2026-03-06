@@ -1,0 +1,40 @@
+@model StudentDto
+@{
+    ViewData["Title"] = "Create Student";
+}
+
+<h2 class="page-title">Create Student</h2>
+<div class="card-forge p-4" style="max-width: 560px;">
+    <form asp-action="Create" method="post" enctype="multipart/form-data" class="form-forge">
+        @Html.AntiForgeryToken()
+        <div class="mb-3">
+            <label asp-for="FirstName" class="form-label"></label>
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="LastName" class="form-label"></label>
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" type="email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="BirthDate" class="form-label"></label>
+            <input asp-for="BirthDate" type="date" class="form-control" />
+            <span asp-validation-for="BirthDate" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Profile Image (optional)</label>
+            <input type="file" name="profileImage" accept=".jpg,.jpeg,.png,.gif,.webp,image/*" class="form-control" />
+            <small class="text-muted">JPG, PNG, GIF or WebP. Max 5MB.</small>
+        </div>
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-forge btn-forge-primary">Create</button>
+            <a asp-action="Index" class="btn btn-forge btn-forge-secondary">Cancel</a>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="SkillForge.API/SkillForge.API.csproj" />
+  <Project Path="SkillForge.Application/SkillForge.Application.csproj" />
+  <Project Path="SkillForge.Domain/SkillForge.Domain.csproj" />
+  <Project Path="SkillForge.Infrastructure/SkillForge.Infrastructure.csproj" />
+  <Project Path="SkillForge.WebClient/SkillForge.WebClient.csproj" />
+  <Project Path="SkillForge.Tests/SkillForge.Tests.csproj" />
+</Solution>

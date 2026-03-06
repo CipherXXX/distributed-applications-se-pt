@@ -1,0 +1,16 @@
+@model CourseDto
+@{
+    ViewData["Title"] = "Delete Course";
+}
+
+<h2 class="page-title">Delete Course</h2>
+<div class="card-forge p-4" style="max-width: 480px;">
+    <p class="mb-4">Are you sure you want to delete <strong>@Model.Title</strong>?</p>
+    <form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+        @Html.AntiForgeryToken()
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-forge" style="background: linear-gradient(135deg, #dc2626, #b91c1c); color: white; box-shadow: 0 4px 14px rgba(239,68,68,0.35);">Delete</button>
+            <a asp-action="Index" class="btn btn-forge btn-forge-secondary">Cancel</a>
+        </div>
+    </form>
+</div>

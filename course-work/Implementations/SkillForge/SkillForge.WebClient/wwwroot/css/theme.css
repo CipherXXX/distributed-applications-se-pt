@@ -1,0 +1,454 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --forge-bg: #0d0c0b;
+  --forge-surface: #1c1917;
+  --forge-surface-hover: #292524;
+  --forge-border: #3f3a36;
+  --forge-ember: #ea580c;
+  --forge-ember-glow: rgba(234, 88, 12, 0.4);
+  --forge-gold: #f59e0b;
+  --forge-gold-soft: #fbbf24;
+  --forge-text: #fafaf9;
+  --forge-text-muted: #a8a29e;
+  --forge-success: #22c55e;
+  --forge-danger: #ef4444;
+  --forge-radius: 12px;
+  --forge-radius-sm: 8px;
+  --forge-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  --forge-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --font-heading: 'Cinzel', serif;
+  --font-body: 'Outfit', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--forge-bg);
+  color: var(--forge-text);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-image: radial-gradient(ellipse 120% 80% at 50% -20%, rgba(234, 88, 12, 0.08), transparent),
+                  radial-gradient(ellipse 60% 40% at 100% 100%, rgba(245, 158, 11, 0.05), transparent);
+}
+
+.main-wrap {
+  min-height: calc(100vh - 180px);
+  animation: pageFadeIn 0.5s ease-out;
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes forgeGlow {
+  0%, 100% { box-shadow: 0 0 20px var(--forge-ember-glow); }
+  50% { box-shadow: 0 0 32px var(--forge-ember-glow), 0 0 48px rgba(245, 158, 11, 0.2); }
+}
+
+@keyframes floatIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+}
+
+.navbar-forge {
+  background: linear-gradient(180deg, rgba(28, 25, 23, 0.98) 0%, rgba(13, 12, 11, 0.95) 100%) !important;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--forge-border);
+  padding: 0.75rem 0;
+  transition: var(--forge-transition);
+}
+
+.navbar-forge .navbar-brand {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--forge-gold) !important;
+  letter-spacing: 0.08em;
+  transition: var(--forge-transition);
+  animation: floatIn 0.6s ease-out;
+}
+
+.navbar-forge .navbar-brand:hover {
+  color: var(--forge-gold-soft) !important;
+  text-shadow: 0 0 24px var(--forge-ember-glow);
+}
+
+.navbar-forge .nav-link {
+  font-weight: 500;
+  color: var(--forge-text-muted) !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: var(--forge-radius-sm);
+  transition: var(--forge-transition);
+  position: relative;
+}
+
+.navbar-forge .nav-link:hover,
+.navbar-forge .nav-link:focus {
+  color: var(--forge-text) !important;
+  background: rgba(234, 88, 12, 0.12);
+}
+
+.navbar-forge .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--forge-ember), var(--forge-gold));
+  transition: var(--forge-transition);
+  transform: translateX(-50%);
+}
+
+.navbar-forge .nav-link:hover::after {
+  width: 80%;
+}
+
+.navbar-forge .btn-link.nav-link {
+  background: none;
+  border: none;
+}
+
+.navbar-forge .navbar-toggler {
+  border-color: var(--forge-border);
+  padding: 0.35rem 0.6rem;
+}
+
+.navbar-forge .navbar-toggler-icon {
+  filter: invert(0.9);
+}
+
+.card-forge {
+  background: var(--forge-surface);
+  border: 1px solid var(--forge-border);
+  border-radius: var(--forge-radius);
+  box-shadow: var(--forge-shadow);
+  overflow: hidden;
+  transition: var(--forge-transition);
+  animation: floatIn 0.5s ease-out backwards;
+}
+
+.card-forge:hover {
+  border-color: rgba(234, 88, 12, 0.3);
+  box-shadow: var(--forge-shadow), 0 0 0 1px rgba(234, 88, 12, 0.1);
+}
+
+.card-forge .card-header {
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid var(--forge-border);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  padding: 1rem 1.25rem;
+  color: var(--forge-text);
+}
+
+/* Auth cards (Register, Add Admin): ensure text uses theme colors, not black */
+.card-forge .form-label,
+.card-forge label,
+.card-forge p,
+.card-forge input.form-control,
+.card-forge input::placeholder {
+  color: var(--forge-text) !important;
+}
+.card-forge .text-muted {
+  color: var(--forge-text-muted) !important;
+}
+.card-forge input.form-control {
+  background-color: var(--forge-surface-hover);
+  border-color: var(--forge-border);
+}
+.card-forge input.form-control::placeholder {
+  color: var(--forge-text-muted);
+}
+.card-forge .page-title {
+  color: var(--forge-gold-soft);
+}
+
+.table-forge {
+  color: var(--forge-text);
+}
+
+.table-forge thead th {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--forge-gold-soft);
+  border-bottom: 2px solid var(--forge-ember);
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.table-forge tbody tr {
+  transition: var(--forge-transition);
+  border-bottom: 1px solid var(--forge-border);
+}
+
+.table-forge tbody tr:hover {
+  background: var(--forge-surface-hover);
+}
+
+.table-forge tbody tr td {
+  padding: 1rem;
+  vertical-align: middle;
+}
+
+.table-forge tbody tr {
+  animation: floatIn 0.4s ease-out backwards;
+}
+
+.table-forge tbody tr:nth-child(1) { animation-delay: 0.05s; }
+.table-forge tbody tr:nth-child(2) { animation-delay: 0.1s; }
+.table-forge tbody tr:nth-child(3) { animation-delay: 0.15s; }
+.table-forge tbody tr:nth-child(4) { animation-delay: 0.2s; }
+.table-forge tbody tr:nth-child(5) { animation-delay: 0.25s; }
+.table-forge tbody tr:nth-child(6) { animation-delay: 0.3s; }
+.table-forge tbody tr:nth-child(7) { animation-delay: 0.35s; }
+.table-forge tbody tr:nth-child(8) { animation-delay: 0.4s; }
+.table-forge tbody tr:nth-child(9) { animation-delay: 0.45s; }
+.table-forge tbody tr:nth-child(10) { animation-delay: 0.5s; }
+
+.btn-forge {
+  font-weight: 600;
+  padding: 0.6rem 1.25rem;
+  border-radius: var(--forge-radius-sm);
+  transition: var(--forge-transition);
+  border: none;
+  letter-spacing: 0.03em;
+}
+
+.btn-forge-primary {
+  background: linear-gradient(135deg, var(--forge-ember), #c2410c);
+  color: white;
+  box-shadow: 0 4px 14px var(--forge-ember-glow);
+}
+
+.btn-forge-primary:hover {
+  background: linear-gradient(135deg, #f97316, var(--forge-ember));
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px var(--forge-ember-glow);
+}
+
+.btn-forge-secondary {
+  background: var(--forge-surface-hover);
+  color: var(--forge-text);
+  border: 1px solid var(--forge-border);
+}
+
+.btn-forge-secondary:hover {
+  background: var(--forge-border);
+  color: var(--forge-text);
+  border-color: var(--forge-ember);
+  transform: translateY(-1px);
+}
+
+.btn-forge-outline {
+  background: transparent;
+  color: var(--forge-gold-soft);
+  border: 2px solid var(--forge-ember);
+}
+
+.btn-forge-outline:hover {
+  background: rgba(234, 88, 12, 0.15);
+  color: var(--forge-gold);
+  transform: translateY(-1px);
+}
+
+.main-wrap .form-control,
+.main-wrap .form-select,
+.form-forge .form-control,
+.form-forge .form-select {
+  background: var(--forge-surface);
+  border: 1px solid var(--forge-border);
+  color: var(--forge-text);
+  border-radius: var(--forge-radius-sm);
+  padding: 0.65rem 1rem;
+  transition: var(--forge-transition);
+}
+
+.main-wrap .form-control:focus,
+.main-wrap .form-select:focus,
+.form-forge .form-control:focus,
+.form-forge .form-select:focus {
+  border-color: var(--forge-ember);
+  box-shadow: 0 0 0 3px var(--forge-ember-glow);
+  outline: none;
+}
+
+.main-wrap .form-control::placeholder,
+.form-forge .form-control::placeholder {
+  color: var(--forge-text-muted);
+}
+
+.form-forge label {
+  color: var(--forge-text-muted);
+  font-weight: 500;
+  margin-bottom: 0.35rem;
+}
+
+.form-forge .text-danger {
+  color: #f87171 !important;
+}
+
+.main-wrap .form-check-input {
+  background-color: var(--forge-surface-hover);
+  border-color: var(--forge-border);
+}
+
+.main-wrap .form-check-input:checked {
+  background-color: var(--forge-ember);
+  border-color: var(--forge-ember);
+}
+
+.main-wrap .form-check-input:focus {
+  box-shadow: 0 0 0 0.2rem var(--forge-ember-glow);
+}
+
+.hero-forge {
+  text-align: center;
+  padding: 3rem 1rem 4rem;
+  animation: floatIn 0.7s ease-out;
+}
+
+.hero-forge h1 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  background: linear-gradient(135deg, var(--forge-gold), var(--forge-ember));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.75rem;
+}
+
+.hero-forge .lead {
+  font-size: 1.25rem;
+  color: var(--forge-text-muted);
+  font-weight: 400;
+  max-width: 540px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-forge .btn-forge-primary {
+  animation: pulse-soft 2.5s ease-in-out infinite;
+}
+
+.page-title {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--forge-gold-soft);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--forge-border);
+  display: inline-block;
+  animation: floatIn 0.4s ease-out;
+}
+
+.footer-forge {
+  background: var(--forge-surface);
+  border-top: 1px solid var(--forge-border);
+  color: var(--forge-text-muted);
+  padding: 1.5rem;
+  font-size: 0.9rem;
+  margin-top: 3rem;
+}
+
+.pagination-forge .page-link {
+  background: var(--forge-surface);
+  border-color: var(--forge-border);
+  color: var(--forge-gold-soft);
+  transition: var(--forge-transition);
+}
+
+.pagination-forge .page-link:hover {
+  background: var(--forge-surface-hover);
+  border-color: var(--forge-ember);
+  color: var(--forge-text);
+}
+
+.pagination-forge .page-item.active .page-link {
+  background: linear-gradient(135deg, var(--forge-ember), #c2410c);
+  border-color: var(--forge-ember);
+  color: white;
+}
+
+.dl-forge dt {
+  color: var(--forge-text-muted);
+  font-weight: 500;
+}
+
+.dl-forge dd {
+  color: var(--forge-text);
+}
+
+.alert-forge {
+  background: var(--forge-surface);
+  border: 1px solid var(--forge-border);
+  border-radius: var(--forge-radius-sm);
+  color: var(--forge-text);
+}
+
+a:not(.nav-link):not(.btn) {
+  color: var(--forge-gold-soft);
+  text-decoration: none;
+  transition: var(--forge-transition);
+}
+
+a:not(.nav-link):not(.btn):hover {
+  color: var(--forge-gold);
+  text-decoration: underline;
+}
+
+.badge-forge {
+  background: rgba(234, 88, 12, 0.25);
+  color: var(--forge-gold-soft);
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  font-weight: 500;
+}
+
+.text-total {
+  color: var(--forge-gold-soft);
+  font-weight: 500;
+}
+
+.stagger-in > * {
+  animation: floatIn 0.5s ease-out backwards;
+}
+
+.stagger-in > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-in > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-in > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-in > *:nth-child(4) { animation-delay: 0.4s; }
+.stagger-in > *:nth-child(5) { animation-delay: 0.5s; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

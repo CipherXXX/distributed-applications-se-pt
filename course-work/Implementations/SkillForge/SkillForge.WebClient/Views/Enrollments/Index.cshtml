@@ -1,0 +1,89 @@
+@model PagedResult<EnrollmentDto>
+@{
+    ViewData["Title"] = "Enrollments";
+    var isAdmin = ViewData["IsAdminEnrollments"] as bool? ?? Context.IsAdmin();
+}
+
+<h2 class="page-title">@(isAdmin ? "Enrollments" : "My Enrollments")</h2>
+@if (isAdmin)
+{
+<div class="card-forge p-3 mb-4">
+    <form method="get" class="row g-2 align-items-end form-forge">
+        <div class="col-auto"><input name="studentId" value="@Context.Request.Query["studentId"]" class="form-control" placeholder="Student ID" /></div>
+        <div class="col-auto"><input name="courseId" value="@Context.Request.Query["courseId"]" class="form-control" placeholder="Course ID" /></div>
+        <div class="col-auto">
+            <select name="completed" class="form-select">
+                <option value="">All</option>
+                <option value="true" selected="@(Context.Request.Query["completed"] == "true")">Completed</option>
+                <option value="false" selected="@(Context.Request.Query["completed"] == "false")">Not completed</option>
+            </select>
+        </div>
+        <input type="hidden" name="page" value="1" />
+        <div class="col-auto"><button type="submit" class="btn btn-forge btn-forge-secondary">Filter</button></div>
+        <div class="col-auto ms-auto"><a asp-action="Create" class="btn btn-forge btn-forge-primary">Create New</a></div>
+    </form>
+</div>
+}
+
+<div class="card-forge overflow-hidden">
+    <table class="table table-forge mb-0">
+        <thead>
+            <tr>
+                @if (isAdmin)
+                {
+                    <th>Id</th>
+                }
+                <th>Student</th>
+                <th>Course</th>
+                <th>Date</th>
+                <th>Progress %</th>
+                <th>Completed</th>
+                @if (isAdmin)
+                {
+                    <th></th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var e in Model?.Items ?? new List<EnrollmentDto>())
+            {
+                <tr>
+                    @if (isAdmin)
+                    {
+                        <td>@e.Id</td>
+                    }
+                    <td>@(isAdmin ? (e.StudentName ?? $"#{e.StudentId}") : (e.StudentName ?? "—"))</td>
+                    <td>@(isAdmin ? (e.CourseTitle ?? $"#{e.CourseId}") : (e.CourseTitle ?? "—"))</td>
+                    <td>@e.EnrollmentDate.ToString("d")</td>
+                    <td>@e.ProgressPercentage</td>
+                    <td>@(e.Completed ? "Yes" : "No")</td>
+                    @if (isAdmin)
+                    {
+                        <td>
+                            <a asp-action="Details" asp-route-id="@e.Id" class="btn-forge-link">Details</a>
+                            <span class="text-muted">|</span>
+                            <a asp-action="Edit" asp-route-id="@e.Id" class="btn-forge-link">Edit</a>
+                            <span class="text-muted">|</span>
+                            <a asp-action="Delete" asp-route-id="@e.Id" class="btn-forge-link">Delete</a>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (Model != null && Model.TotalPages > 1)
+{
+    <nav class="mt-3">
+        <ul class="pagination pagination-forge">
+            @for (var i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.Page ? "active" : "")">
+                    <a class="page-link" href="?page=@i&pageSize=@Model.PageSize&studentId=@Context.Request.Query["studentId"]&courseId=@Context.Request.Query["courseId"]&completed=@Context.Request.Query["completed"]">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}
+<p class="text-total mt-3 mb-0">Total: @(Model?.TotalCount ?? 0)</p>

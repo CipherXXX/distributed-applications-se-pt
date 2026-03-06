@@ -1,0 +1,94 @@
+@model PagedResult<CourseDto>
+@{
+    ViewData["Title"] = "Courses";
+    var isAdmin = Context.IsAdmin();
+}
+
+<h2 class="page-title">Courses</h2>
+<div class="card-forge p-3 mb-4">
+    <form method="get" class="row g-2 align-items-end form-forge">
+        <div class="col-auto"><input name="title" value="@Context.Request.Query["title"]" class="form-control" placeholder="Title" /></div>
+        <div class="col-auto">
+            <select name="isActive" class="form-select">
+                <option value="">All</option>
+                <option value="true" selected="@(Context.Request.Query["isActive"] == "true")">Active</option>
+                <option value="false" selected="@(Context.Request.Query["isActive"] == "false")">Inactive</option>
+            </select>
+        </div>
+        <input type="hidden" name="page" value="1" />
+        <div class="col-auto"><button type="submit" class="btn btn-forge btn-forge-secondary">Search</button></div>
+        @if (isAdmin)
+        {
+            <div class="col-auto ms-auto"><a asp-action="Create" class="btn btn-forge btn-forge-primary">Create New</a></div>
+        }
+    </form>
+</div>
+
+<div class="card-forge overflow-hidden">
+    <table class="table table-forge mb-0">
+        <thead>
+            <tr>
+                @if (isAdmin)
+                {
+                    <th>Id</th>
+                }
+                <th>Title</th>
+                <th>Price</th>
+                <th>Duration (h)</th>
+                <th>Active</th>
+                <th>Material</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in Model?.Items ?? new List<CourseDto>())
+            {
+                <tr>
+                    @if (isAdmin)
+                    {
+                        <td>@c.Id</td>
+                    }
+                    <td>@c.Title</td>
+                    <td>@c.Price.ToString("C")</td>
+                    <td>@c.DurationHours</td>
+                    <td>@(c.IsActive ? "Yes" : "No")</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(c.MaterialFileUrl))
+                        {
+                            <a href="@Url.Action("Download", "Files", new { path = c.MaterialFileUrl })" target="_blank" rel="noopener" download class="btn btn-forge btn-forge-outline btn-sm">Download</a>
+                        }
+                        else
+                        {
+                            <span class="text-muted">—</span>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@c.Id" class="btn-forge-link">Details</a>
+                        @if (isAdmin)
+                        {
+                            <span class="text-muted">|</span>
+                            <a asp-action="Edit" asp-route-id="@c.Id" class="btn-forge-link">Edit</a>
+                            <span class="text-muted">|</span>
+                            <a asp-action="Delete" asp-route-id="@c.Id" class="btn-forge-link">Delete</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (Model != null && Model.TotalPages > 1)
+{
+    <nav class="mt-3">
+        <ul class="pagination pagination-forge">
+            @for (var i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.Page ? "active" : "")">
+                    <a class="page-link" href="?page=@i&pageSize=@Model.PageSize&title=@Context.Request.Query["title"]&isActive=@Context.Request.Query["isActive"]">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}
+<p class="text-total mt-3 mb-0">Total: @(Model?.TotalCount ?? 0)</p>

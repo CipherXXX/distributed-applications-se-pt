@@ -1,0 +1,34 @@
+html {
+  font-size: 14px;
+  position: relative;
+  min-height: 100%;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .form-control:focus, .form-check-input:focus {
+  outline: none;
+}
+
+.form-floating > .form-control-plaintext::placeholder,
+.form-floating > .form-control::placeholder {
+  color: var(--forge-text-muted, #6b7280);
+}
+
+.input-validation-error {
+  border-color: var(--forge-danger, #ef4444) !important;
+}
+
+.field-validation-error {
+  font-size: 0.875rem;
+}
+
+.validation-summary-errors ul {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+}

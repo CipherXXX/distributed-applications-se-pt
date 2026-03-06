@@ -1,0 +1,15 @@
+@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<h2 class="page-title">Error</h2>
+<div class="card-forge p-4">
+    <h3 class="mb-3" style="color: #f87171;">An error occurred while processing your request.</h3>
+    @if (Model.ShowRequestId)
+    {
+        <p class="mb-0">
+            <strong>Request ID:</strong> <code style="color: var(--forge-gold-soft);">@Model.RequestId</code>
+        </p>
+    }
+</div>

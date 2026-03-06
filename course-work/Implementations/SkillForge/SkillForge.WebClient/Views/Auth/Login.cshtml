@@ -1,0 +1,29 @@
+@model LoginDto
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="card-forge mx-auto" style="max-width: 420px;">
+    <div class="card-header">Login</div>
+    <div class="card-body p-4">
+        <form asp-action="Login" method="post" class="form-forge">
+            <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]" />
+            @Html.AntiForgeryToken()
+            <div class="mb-3">
+                <label asp-for="UserName" class="form-label"></label>
+                <input asp-for="UserName" class="form-control" placeholder="Your username" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label"></label>
+                <input asp-for="Password" type="password" class="form-control" placeholder="Your password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+            <div class="d-flex gap-2 flex-wrap">
+                <button type="submit" class="btn btn-forge btn-forge-primary">Login</button>
+                <a asp-action="Register" class="btn btn-forge btn-forge-secondary">Register</a>
+            </div>
+        </form>
+    </div>
+</div>

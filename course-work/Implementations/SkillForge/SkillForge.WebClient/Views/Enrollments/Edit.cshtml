@@ -1,0 +1,26 @@
+@model EnrollmentDto
+@{
+    ViewData["Title"] = "Edit Enrollment";
+}
+
+<h2 class="page-title">Edit Enrollment</h2>
+<div class="card-forge p-4" style="max-width: 420px;">
+    <form asp-action="Edit" asp-route-id="@Model.Id" method="post" class="form-forge">
+        @Html.AntiForgeryToken()
+        <div class="mb-3">
+            <label asp-for="ProgressPercentage" class="form-label">Progress %</label>
+            <input asp-for="ProgressPercentage" type="number" step="0.01" min="0" max="100" class="form-control" />
+            <span asp-validation-for="ProgressPercentage" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label d-flex align-items-center gap-2">
+                <input asp-for="Completed" type="checkbox" class="form-check-input" />
+                Completed
+            </label>
+        </div>
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-forge btn-forge-primary">Save</button>
+            <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-forge btn-forge-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
